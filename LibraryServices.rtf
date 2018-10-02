@@ -1,0 +1,1883 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf100
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red26\green26\blue26;\red234\green234\blue234;\red98\green0\blue117;
+\red7\green64\blue153;\red37\green0\blue153;\red25\green0\blue135;}
+{\*\expandedcolortbl;;\cssrgb\c13333\c13333\c13333;\cssrgb\c93333\c93333\c93333;\cssrgb\c46667\c0\c53333;
+\cssrgb\c0\c33333\c66667;\cssrgb\c20000\c0\c66667;\cssrgb\c13333\c6667\c60000;}
+\margl1440\margr1440\vieww28300\viewh14840\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 \
+\
+\
+create DATABASE LibraryServices\
+=============================\
+PUBLISHER\
+\
+CREATE TABLE PUBLISHER(\
+PUBLISHERID INT(10),\
+PUBNAME CHAR(50),\
+ADDRESS VARCHAR(20),\
+PRIMARY KEY PK(PUBLISHEID)\
+)\
+\
+=========================\
+DOCUMENT\
+\
+CREATE TABLE DOCUMENT(\
+DOCID INT(10),\
+    TITLE CHAR(50),\
+    PDATE DATE,\
+    PUBLISHERID INT(10),\
+    PRIMARY KEY PK(DOCID),\
+    FOREIGN KEY FK(PUBLISHERID) REFERENCES PUBLISHER(PUBLISHERID)\
+)\
+\
+==========================\
+\
+BRANCH\
+\
+CREATE TABLE BRANCH(\
+    LIBID INT(10),\
+    LNAME CHAR(20),\
+    LLOCATION CHAR(20),\
+    PRIMARY KEY PK(LIBID)\
+)\
+\
+\
+==========================\
+\
+COPY\
+\
+CREATE TABLE COPY(\
+    DOCID INT(10),\
+    COPYNO INT(30),\
+    LIBID INT(10),\
+    POSTION VARCHAR(6),\
+    PRIMARY KEY PK(COPYNO,DOCID,LIBID),\
+    FOREIGN KEY FK1(DOCID) REFERENCES DOCUMENT(DOCID),\
+    FOREIGN KEY FK2(LIBID) REFERENCES BRANCH(LIBID)\
+)\
+\
+\
+============================\
+\
+READER\
+\
+CREATE TABLE READER(\
+    READERID INT(10),\
+    RTYPE CHAR(20),\
+    RNAME CHAR(20),\
+    ADDRESS VARCHAR(30),\
+    PRIMARY KEY PK(READERID)\
+\
+)\
+\
+===========================\
+\
+BORROWS\
+\
+CREATE TABLE BORROWS(\
+    BORNUMBER INT(10),\
+    READERID INT(10),\
+    DOCID INT(10),\
+    COPYNO INT(30),\
+    LIBID INT(10),\
+    BDTIME TIMESTAMP,\
+    RDTIME TIMESTAMP,\
+    PRIMARY KEY(BORNUMBER),\
+    FOREIGN KEY FK_READER(READERID) REFERENCES READER(READERID),\
+    FOREIGN KEY FK_COPY(DOCID, COPYNO, LIBID) REFERENCES COPY(DOCID, COPYNO, LIBID)\
+);\
+\pard\pardeftab720\partightenfactor0
+
+\f1\fs21\fsmilli10660 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\
+ALTER TABLE BORROWS CHANGE `BORNUMBER` 	`BORNUMBER` INT(10) NOT NULL AUTO_INCREMENT\
+\pard\pardeftab720\partightenfactor0
+{\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/alter-table.html"}}{\fldrslt \cf4 ALTER}} {\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/alter-table.html"}}{\fldrslt \cf4 TABLE}} \cf5 `BORROWS`\cf2  \cf4 CHANGE\cf2  \cf5 `RDTIME`\cf2  \cf5 `RDTIME`\cf2  {\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/date-and-time-types.html"}}{\fldrslt \cf6 TIMESTAMP}} \cf7 NULL\cf2  {\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/miscellaneous-functions.html#function_default"}}{\fldrslt \cf4 DEFAULT}} {\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_current_timestamp"}}{\fldrslt \cf4 CURRENT_TIMESTAMP}};\
+{\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/alter-table.html"}}{\fldrslt \cf4 ALTER}} {\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/alter-table.html"}}{\fldrslt \cf4 TABLE}} \cf5 `BORROWS`\cf2  \cf4 CHANGE\cf2  \cf5 `BDTIME`\cf2  \cf5 `BDTIME`\cf2  {\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/date-and-time-types.html"}}{\fldrslt \cf6 TIMESTAMP}} \cf4 on\cf2  {\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/update.html"}}{\fldrslt \cf4 update}} {\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_current_timestamp"}}{\fldrslt \cf4 CURRENT_TIMESTAMP}} \cf7 NULL\cf2  {\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/miscellaneous-functions.html#function_default"}}{\fldrslt \cf4 DEFAULT}} {\field{\*\fldinst{HYPERLINK "http://localhost/phpmyadmin/url.php?url=https://dev.mysql.com/doc/refman/5.5/en/date-and-time-functions.html#function_current_timestamp"}}{\fldrslt \cf4 CURRENT_TIMESTAMP}};
+\f0\fs24 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+==============================\
+\
+RESERVES\
+\
+CREATE TABLE RESERVES(\
+    RESNUMBER INT(10),\
+    READERID INT(10),\
+    DOCID INT(10),\
+    COPYNO INT(30),\
+    LIBID INT(10),\
+    DTIME TIMESTAMP,\
+    PRIMARY KEY PK_RESERVES(RESNUMBER),\
+    FOREIGN KEY FK_RESERVE_READER(READERID) REFERENCES READER(READERID),\
+    FOREIGN KEY FK_RESERVE_COPY(DOCID, COPYNO, LIBID) REFERENCES COPY(DOCID, COPYNO, LIBID)\
+)\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+ALTER TABLE RESERVES \
+CHANGE \'91DTIME\'92 DATETIME ON UPDATE CURRENT_TIMESTAMP NULL DEFAULT NULL;
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+=============================\
+\
+PROCEEDINGS\
+\
+CREATE TABLE PROCEEDINGS(\
+    DOCID INT(10),\
+    CDATE DATE,\
+    CLOCATION VARCHAR(20),\
+    CEDITOR CHAR(20),\
+    PRIMARY KEY PK_PROCEEDINGS(DOCID),\
+    FOREIGN KEY FK_PRCEEDING_DOCUMENT(DOCID) REFERENCES DOCUMENT(DOCID)\
+\
+)\
+\
+\
+===============================\
+\
+CHIEF_EDITOR\
+\
+\
+CREATE TABLE CHIEF_EDITOR(\
+    EDITOR_ID INT(10),\
+    ENAME CHAR(20),\
+    PRIMARY KEY PK_CHIEF_EDITOR(EDITOR_ID)\
+)\
+\
+\
+================================\
+\
+JOURNAL_VOLUME\
+\
+CREATE TABLE JOURNAL_VOLUME(\
+    DOCID INT(10),\
+    JVOLUME VARCHAR(20),\
+    EDITOR_ID INT(10),\
+    PRIMARY KEY PK_JOURNAL_VOLUME(DOCID),\
+    FOREIGN KEY FK_JOURNAL_VOLUME_DOCUMENT(DOCID) REFERENCES DOCUMENT(DOCID),\
+    FOREIGN KEY FK_JOURNAL_VOLUME_CHIEF_EDITOR(EDITOR_ID) REFERENCES CHIEF_EDITOR(EDITOR_ID)\
+)\
+\
+===============================\
+\
+JOURNAL_ISSUE\
+\
+CREATE TABLE JOURNAL_ISSUE(\
+    DOCID INT(10),\
+    ISSUE_NO INT(10),\
+    SCOPE VARCHAR(20),\
+    PRIMARY KEY PK_JOURNAL_ISSUE(ISSUE_NO,DOCID),\
+    FOREIGN KEY FK_JOURNAL_ISSUE_JOURNAL_VOLUME(DOCID) REFERENCES JOURNAL_VOLUME(DOCID)\
+\
+)\
+\
+\
+============================\
+\
+INV_EDITOR\
+\
+CREATE TABLE INV_EDITOR(\
+    DOCID INT(10),\
+    ISSUE_NO INT(10),\
+    IENAME CHAR(20),\
+    PRIMARY KEY PK_INV_EDITOR(DOCID, ISSUE_NO, IENAME),\
+    FOREIGN KEY FK_INV_EDITOR_JOURNAL_ISSUE(DOCID, ISSUE_NO) REFERENCES JOURNAL_ISSUE(DOCID, ISSUE_NO)\
+)\
+\
+===========================\
+\
+BOOK\
+\
+CREATE TABLE BOOK(\
+    DOCID INT(10),\
+    ISBN VARCHAR(20),\
+    PRIMARY KEY PK_BOOK(DOCID),\
+    FOREIGN KEY FK_NOO_DOCUMENT(DOCID) REFERENCES DOCUMENT(DOCID)\
+)\
+\
+\
+ALTER TABLE BOOK\
+ADD FOREIGN KEY FK_NOO_DOCUMENT(DOCID) REFERENCES DOCUMENT(DOCID)\
+\
+===========================\
+\
+AUTHOR\
+\
+CREATE TABLE AUTHOR(\
+    AUTHORID INT(10),\
+    ANAME CHAR(20),\
+    PRIMARY KEY PK_AUTHOR(AUTHORID)\
+)\
+\
+===========================\
+\
+WRITES\
+\
+CREATE TABLE WRITES(\
+    AUTHORID INT(10),\
+    DOCID INT(10),\
+    PRIMARY KEY PK_WRITES(AUTHORID, DOCID),\
+    FOREIGN KEY FK_WRITES_BOOK(DOCID) REFERENCES BOOK(DOCID),\
+    FOREIGN KEY FK_WRITES_AUTHOR(AUTHORID) REFERENCES AUTHOR(AUTHORID)\
+)\
+\
+\
+==========================\
+\
+REGISTRATION\
+\
+CREATE TABLE REGISTRATION(\
+    NAME CHAR(20) NOT NULL,\
+    ID VARCHAR(20) NOT NULL,\
+    PASSWORD VARCHAR(10) NOT NULL,\
+    CONFIRM_PASSWORD VARCHAR(10) NOT NULL,\
+    PRIMARY KEY PK_REGISTRATION(ID)\
+)\
+\
+==========================\
+\
+\
+CREATE TABLE LOGIN(\
+    ID VARCHAR(20),\
+    PASSWORD VARCHAR(10),\
+    PRIMARY KEY PK_LOGIN(ID),\
+    FOREIGN KEY FK_REGISTRATION_LOGIN(ID) REFERENCES REGISTRATION(ID)\
+)\
+\
+\
+\
+\
+###########################################################################################################\
+\
+TRIGGERS\
+\
+\
+CREATE TRIGGER LOGIN_UPDATE1 AFTER INSERT ON\
+    REGISTRATION FOR EACH ROW\
+INSERT INTO LOGIN\
+SET\
+    ID = NEW.ID, PASSWORD = NEW.PASSWORD\
+\
+\
+=======================================================\
+\
+CREATE TRIGGER RESERVEDELETE_BORROWENTER AFTER INSERT ON\
+    BORROWS FOR EACH ROW\
+DELETE\
+FROM\
+    RESERVES\
+WHERE\
+    READERID = NEW.READERID AND DOCID = NEW.DOCID AND COPYNO = NEW.COPYNO AND LIBID = NEW.LIBID\
+\
+\
+\
+############################################################################################################\
+\
+=> EVENT TO DELETE DATA FROM RESERVES EVERY AT 6PM \
+\
+CREATE EVENT my_event\
+  ON SCHEDULE\
+    EVERY 1 DAY\
+    STARTS '2017-12-01 18:00:00' ON COMPLETION PRESERVE ENABLE \
+  DO\
+  DELETE FROM RESERVES\
+\
+\
+CREATE EVENT CLEAR_RESERVE_BY_6PM ON SCHEDULE EVERY 1 DAY\
+STARTS CURRENT_TIMESTAMP + INTERVAL 1 MINUTE\
+DO DELETE FROM RESERVES;\
+\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+CREATE EVENT my_event1\
+  ON SCHEDULE\
+    EVERY 1 DAY\
+    STARTS '2017-12-01 4:00:00' ON COMPLETION PRESERVE ENABLE \
+  DO\
+  DELETE FROM RESERVES\
+\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+\
+CREATE DEFINER=`root`@`localhost` EVENT `RESERVECANCEL` ON SCHEDULE EVERY 1 DAY STARTS '2017-12-11 16:40:00.000000' ENDS '2017-12-11 16:45:00.000000' ON COMPLETION PRESERVE ENABLE COMMENT 'RESERVE DATA DELETION AFTER 4:40 PM' DO DELETE FROM RESERVES\
+\
+\
+\
+\
+\
+#############################################################################################################\
+\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b\fs30 \cf0 INSERT OPERATION
+\b0\fs24 \
+\
+=>.READER\
+\
+INSERT INTO `READER` (`READERID`, `RTYPE`, `RNAME`, `ADDRESS`) VALUES ('1001', 'STUDENT', 'ASHA', 'New Jersey');\
+INSERT INTO `READER` (`READERID`, `RTYPE`, `RNAME`, `ADDRESS`) VALUES ('1002\'92, 'STUDENT', \'92VIDHI', 'New Jersey');\
+INSERT INTO `READER` (`READERID`, `RTYPE`, `RNAME`, `ADDRESS`) VALUES ('1003\'92, 'STUDENT', 'MOHIT', 'CLIFFTON');\
+INSERT INTO `READER` (`READERID`, `RTYPE`, `RNAME`, `ADDRESS`) VALUES ('1004', 'STUDENT', 'VISHAL', 'INDIANA');\
+\
+\
+\
+=> BRANCH\
+\
+INSERT INTO `BRANCH` (`LIBID`, `LNAME`, `LLOCATION`) VALUES ('1001', 'CAMPUS CENTER', 'NEWARK');\
+INSERT INTO `BRANCH` (`LIBID`, `LNAME`, `LLOCATION`) VALUES ('1002', 'FENSTER HALL', 'NJIT');\
+INSERT INTO `BRANCH` (`LIBID`, `LNAME`, `LLOCATION`) VALUES ('1003', 'CENTRAL KINGS BUILDING', 'NEWARK');\
+INSERT INTO `BRANCH` (`LIBID`, `LNAME`, `LLOCATION`) VALUES ('1004', 'MAIN BRANCH', 'INDIANA');\
+\
+\
+=> COPY\
+\
+\
+INSERT INTO `COPY` (`DOCID`, `COPYNO`, `LIBID`, `POSTION`) VALUES ('1001', '1', '1001', '001A03');\
+INSERT INTO `COPY` (`DOCID`, `COPYNO`, `LIBID`, `POSTION`) VALUES ('1001', '1', '1002', '001B03');\
+INSERT INTO `COPY` (`DOCID`, `COPYNO`, `LIBID`, `POSTION`) VALUES ('1001', '2', '1003', '002A03');\
+INSERT INTO `COPY` (`DOCID`, `COPYNO`, `LIBID`, `POSTION`) VALUES ('1001', '3', '1004', '002V02');\
+\
+\
+=> RESERVES\
+\
+INSERT INTO `RESERVES` (`RESNUMBER`, `READERID`, `DOCID`, `COPYNO`, `LIBID`, `DTIME`) VALUES ('1001', '1001', '1001', '1', '1001', CURRENT_TIMESTAMP);\
+\
+\
+\
+=> BOOK\
+\
+INSERT INTO `BOOK` (`DOCID`, `ISBN`) VALUES ('1001', '5512634572');\
+INSERT INTO `BOOK` (`DOCID`, `ISBN`) VALUES ('1020', '1234567890');\
+INSERT INTO `BOOK` (`DOCID`, `ISBN`) VALUES ('1003', '5512634572');\
+\
+\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\'97\
+\
+\
+\
+RESERVES\
+INSERT INTO `RESERVES` (`RESNUMBER`, `READERID`, `DOCID`, `COPYNO`, `LIBID`, `DTIME`) VALUES (NULL, NULL, '1001', '1', '1001', '2017-12-13');\
+INSERT INTO `RESERVES` (`RESNUMBER`, `READERID`, `DOCID`, `COPYNO`, `LIBID`, `DTIME`) VALUES (NULL, '1002', '1002', '3', NULL, '2017-12-13');\
+\
+\
+\
+\
+=>AUTHOR\
+INSERT INTO `AUTHOR` (`AUTHORID`, `ANAME`) VALUES ('1001', 'Ushama');\
+INSERT INTO `AUTHOR` (`AUTHORID`, `ANAME`) VALUES ('1002', 'MOHIT');\
+INSERT INTO `AUTHOR` (`AUTHORID`, `ANAME`) VALUES ('1003', 'CHANDANI');\
+\
+\
+=> WRITES\
+INSERT INTO `WRITES` (`AUTHORID`, `DOCID`) VALUES ('1001', '1001');\
+INSERT INTO `WRITES` (`AUTHORID`, `DOCID`) VALUES ('1002', '1003');\
+INSERT INTO `WRITES` (`AUTHORID`, `DOCID`) VALUES ('1003', '1020');\
+\
+\
+\
+=> CHIEF_EDITOR\
+INSERT INTO `CHIEF_EDITOR` (`EDITOR_ID`, `ENAME`) VALUES ('1001', 'ASHA VATALIA');\
+INSERT INTO `CHIEF_EDITOR` (`EDITOR_ID`, `ENAME`) VALUES ('1002', 'MOHIT PATEL');\
+INSERT INTO `CHIEF_EDITOR` (`EDITOR_ID`, `ENAME`) VALUES ('1003', 'VISHAL DESAI');\
+INSERT INTO `CHIEF_EDITOR` (`EDITOR_ID`, `ENAME`) VALUES ('1004', 'VIDHI SHAH');\
+\
+\
+\
+\
+##############################################################################################################\
+\
+PROBLEM FACED\
+\
+=> TWO TIME DATABASE CREATED BEACUSE OF DEPENDENCIES ISSUES\
+\
+\
+\
+\
+##############################################################################################################\
+\
+\
+\
+\
+\
+##############################################################################################################\
+\
+\
+\
+\
+\
+\
+==================\
+COPY(3 attire) - RESERVE (3 attr)  - BORROWd(3 attracted*)\
+\
+* RDATE is null \
+ \
+\
+\
+SELECT B2.LIBID, COUNT(DOCID) AS NOOFBOR FROM BORROWS B1, BRANCH B2\
+WHERE B1.LIBID = B2.LIBID \
+GROUP BY B2.LIBID\
+ORDER BY NOOFBOR DESC\
+LIMIT 10\
+\
+\
+\
+SELECT B2.LIBID, COUNT(B1.DOCID) AS NOOFBOR FROM BORROWS B1, COPY B2\
+WHERE B1.LIBID = B2.LIBID \
+GROUP BY B2.LIBID\
+ORDER BY NOOFBOR DESC\
+LIMIT 10\
+\
+\
+\
+\
+SELECT DOCID, COUNT(*) AS NOOFBOR FROM BORROWS\
+\
+GROUP BY libid\
+ORDER BY NOOFBOR DESC\
+LIMIT 10	\
+\
+\
+SELECT DOCID, COUNT(*) AS NOOFBOR FROM BORROWS\
+where libid = 1001\
+GROUP BY libid\
+ORDER BY NOOFBOR DESC\
+LIMIT 10\
+\
+\
+SELECT DOCID FROM BORROWS WHERE LIBID=1001 GROUP BY DOCID ORDER BY COUNT(*) DESC LIMIT 10\
+\
+\
+SELECT DOCID FROM BORROWS\
+where libid = 1001\
+GROUP BY DOCID\
+ORDER BY count(*) DESC\
+LIMIT 10\
+\
+========================				-\
+\
+SELECT B.DOCID, D.TITLE FROM BORROWS B, DOCUMENT D\
+where libid = 1001\
+GROUP BY DOCID\
+ORDER BY count(*) DESC\
+LIMIT 10\
+\
+\
+========================\
+\
+PRINT TOP 10 MOST BORROWED BOOKS IN A BRANCH\
+\
+SELECT B.DOCID, D.TITLE, D.PDATE, D.PUBLISHERID FROM BORROWS B, DOCUMENT D\
+where libid = 1001\
+GROUP BY DOCID\
+ORDER BY count(*) DESC\
+LIMIT 10\
+=======================\
+\
+PRINT TOP 10 MOST FREQUENT BORROWERS WITH TOTAL NUMBER OF BOOKS\
+\
+SELECT READERID, COUNT(DOCID) FROM BORROWS\
+WHERE LIBID = 1001\
+GROUP BY READERID\
+ORDER BY COUNT(*) DESC\
+LIMIT 10\
+\
+\
+========================\
+\
+PRINT TOP 10 MOST POPULAR BOOKS OF THE YEAR\
+\
+SELECT DOCID, COUNT(*),YEAR(BDTIME) FROM BORROWS\
+WHERE YEAR(BDTIME) = '2017'\
+GROUP BY DOCID\
+ORDER BY COUNT(DOCID) DESC\
+LIMIT 10\
+\
+\
+\
+===========================\
+\
+CALCULATE FINE \
+\
+SELECT *,IF (DATEDIFF(RDTIME, BDTIME) > 20,(DATEDIFF(RDTIME, BDTIME) -20) * 0.20,0) \
+AS 'FINE' FROM BORROWS WHERE READERID = 1001\
+\
+\
+==============================\
+\
+FIND THE AVERAGE FINE PAID PER READER\
+\
+SELECT *,AVG(IF (DATEDIFF(CURRENT_TIMESTAMP, BDTIME) > 20,(DATEDIFF(CURRENT_TIMESTAMP, BDTIME) -20) * 0.20,0)) as 'AVERAGE FINE'\
+FROM BORROWS WHERE READERID = 1001\
+\
+OR\
+\
+SELECT READERID,DOCID,COPYNO,LIBID,BDTIME,RDTIME,AVG(IF (DATEDIFF(CURRENT_TIMESTAMP, BDTIME) > 20,(DATEDIFF(CURRENT_TIMESTAMP, BDTIME) -20) * 0.20,0)) as 'AVERAGE FINE'\
+FROM BORROWS WHERE READERID = 1001	\
+\
+\
+\
+\
+=============================\
+\
+CREATE EVENT CLEAR_RESERVEBY6 ON SCHEDULE EVERY 1 DAY\
+STARTS CURRENT_TIMESTAMP + INTERVAL 1 MINUTE\
+DO DELETE FROM RESERVES;\
+\
+\
+\
+\
+\
+===================================\
+\
+DOCUMENT RESERVES\
+\
+package LoginPage;\
+\
+import LoginPage.MySQLConnection;\
+import java.sql.*;\
+\
+import java.util.ArrayList;\
+import javax.swing.JOptionPane;\
+\
+/*\
+ * To change this license header, choose License Headers in Project Properties.\
+ * To change this template file, choose Tools | Templates\
+ * and open the template in the editor.\
+ */\
+/**\
+ *\
+ * @author ashavatalia\
+ */\
+public class DocumentReserve2 extends javax.swing.JFrame \{\
+    \
+    Connection con;\
+    ResultSet result;\
+    PreparedStatement stmt;\
+    \
+    java.util.Date date = new java.util.Date();\
+    java.sql.Date sqlDate;\
+    \
+    public DocumentReserve2() \{\
+        initComponents();\
+        getReaderIdFromReader();\
+        getDocidFromCopy();\
+        jDateChooser1.getJCalendar().setMinSelectableDate(date);\
+    \}\
+    \
+    void getReaderIdFromReader() \{\
+        \
+        try \{\
+            \
+            con = MySQLConnection.ConnectionDB();\
+            String sql = "select readerid from reader";\
+            PreparedStatement stmt = con.prepareStatement(sql);\
+            result = stmt.executeQuery();\
+            while (result.next()) \{\
+                \
+                jComboBoxReaderId.addItem(result.getString("readerid"));\
+            \}\
+            \
+        \} catch (Exception e) \{\
+            \
+            JOptionPane.showMessageDialog(this, "An error occured please"\
+                    + " contact your adminisrator " + e.getMessage(),\
+                    "Error Message", JOptionPane.ERROR_MESSAGE);\
+        \}\
+        \
+    \}\
+    \
+    void getDocidFromCopy() \{\
+        \
+        try \{\
+            con = MySQLConnection.ConnectionDB();\
+            \
+            String sql = "select distinct docid from copy";\
+            Statement stmt1 = con.createStatement();\
+\
+            //result = stmt.executeQuery();\
+            result = stmt1.executeQuery(sql);\
+            \
+            ArrayList<String> data = new ArrayList<>();\
+            while (result.next()) \{\
+                \
+                String docId = result.getString("DOCID");\
+                \
+                data.add(docId);\
+                //jComboBoxDocId.addItem(trmp);\
+                //jComboBoxDocId.addItem(trmp);\
+\
+                //System.out.println();\
+//                jComboBoxCopyNumber.addItem(result.getString("copyno"));\
+//                jComboBoxLibId.addItem(result.getString("libid"));\
+            \}\
+            jComboBoxDocId.removeAllItems();\
+            for (int i = 0; i < data.size(); i++) \{\
+\
+                // System.out.println("The data is " + data.get(i) + " " + i);\
+                // if (jComboBoxDocId != null) \{\
+                // System.out.println("In if 1");\
+                //if (data.get(i) != null) \{\
+                // System.out.println("In if 2");\
+                jComboBoxDocId.addItem(data.get(i));\
+                //\}\
+                //\}\
+                //System.out.println("The data inserted is " + data.get(i));\
+\
+            \}\
+            \
+        \} catch (Exception e) \{\
+            \
+            e.printStackTrace();\
+        \}\
+        \
+    \}\
+\
+    /**\
+     * This method is called from within the constructor to initialize the form.\
+     * WARNING: Do NOT modify this code. The content of this method is always\
+     * regenerated by the Form Editor.\
+     */\
+    @SuppressWarnings("unchecked")\
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          \
+    private void initComponents() \{\
+\
+        jLabel1 = new javax.swing.JLabel();\
+        jComboBoxDocId = new javax.swing.JComboBox<>();\
+        jLabel2 = new javax.swing.JLabel();\
+        jComboBoxCopyNo = new javax.swing.JComboBox<>();\
+        jLabel3 = new javax.swing.JLabel();\
+        jComboBoxLibId = new javax.swing.JComboBox<>();\
+        jLabel4 = new javax.swing.JLabel();\
+        jComboBoxReaderId = new javax.swing.JComboBox<>();\
+        jLabel5 = new javax.swing.JLabel();\
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();\
+        jButton1 = new javax.swing.JButton();\
+        jButton2 = new javax.swing.JButton();\
+\
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);\
+\
+        jLabel1.setText("Document ID :");\
+\
+        jComboBoxDocId.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jComboBoxDocIdActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jLabel2.setText("Copy Number :");\
+\
+        jComboBoxCopyNo.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jComboBoxCopyNoActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jLabel3.setText("Library ID :");\
+\
+        jComboBoxLibId.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jComboBoxLibIdActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jLabel4.setText("Reader ID :");\
+\
+        jLabel5.setText("Date :");\
+\
+        jButton1.setText("Reserve");\
+        jButton1.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jButton1ActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jButton2.setText("Back");\
+        jButton2.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jButton2ActionPerformed(evt);\
+            \}\
+        \});\
+\
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());\
+        getContentPane().setLayout(layout);\
+        layout.setHorizontalGroup(\
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+            .addGroup(layout.createSequentialGroup()\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+                    .addGroup(layout.createSequentialGroup()\
+                        .addGap(92, 92, 92)\
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+                            .addComponent(jLabel3)\
+                            .addGroup(layout.createSequentialGroup()\
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+                                    .addComponent(jLabel1)\
+                                    .addComponent(jLabel2)\
+                                    .addComponent(jLabel4)\
+                                    .addComponent(jLabel5))\
+                                .addGap(147, 147, 147)\
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)\
+                                    .addComponent(jComboBoxLibId, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)\
+                                    .addComponent(jComboBoxDocId, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)\
+                                    .addComponent(jComboBoxCopyNo, 0, 276, Short.MAX_VALUE)\
+                                    .addComponent(jComboBoxReaderId, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)\
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))\
+                    .addGroup(layout.createSequentialGroup()\
+                        .addGap(174, 174, 174)\
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                        .addGap(59, 59, 59)\
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)))\
+                .addContainerGap(184, Short.MAX_VALUE))\
+        );\
+        layout.setVerticalGroup(\
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+            .addGroup(layout.createSequentialGroup()\
+                .addGap(80, 80, 80)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)\
+                    .addComponent(jLabel4)\
+                    .addComponent(jComboBoxReaderId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addGap(29, 29, 29)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)\
+                    .addComponent(jLabel1)\
+                    .addComponent(jComboBoxDocId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+                    .addGroup(layout.createSequentialGroup()\
+                        .addGap(80, 80, 80)\
+                        .addComponent(jLabel2))\
+                    .addGroup(layout.createSequentialGroup()\
+                        .addGap(88, 88, 88)\
+                        .addComponent(jComboBoxCopyNo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))\
+                .addGap(82, 82, 82)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+                    .addComponent(jLabel3)\
+                    .addComponent(jComboBoxLibId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+                    .addGroup(layout.createSequentialGroup()\
+                        .addGap(60, 60, 60)\
+                        .addComponent(jLabel5))\
+                    .addGroup(layout.createSequentialGroup()\
+                        .addGap(68, 68, 68)\
+                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))\
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)\
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addGap(49, 49, 49))\
+        );\
+\
+        pack();\
+    \}// </editor-fold>                        \
+\
+    private void jComboBoxDocIdActionPerformed(java.awt.event.ActionEvent evt) \{                                               \
+        \
+        jComboBoxCopyNo.removeAllItems();\
+        \
+        String docId = jComboBoxDocId.getSelectedItem().toString();\
+        \
+        try \{\
+            con = MySQLConnection.ConnectionDB();\
+            String sql = "select copyno from copy where docid=?";\
+            PreparedStatement stmt = con.prepareStatement(sql);\
+            stmt.setString(1, docId);\
+            \
+            result = stmt.executeQuery();\
+            \
+            while (result.next()) \{\
+                \
+                jComboBoxCopyNo.addItem(result.getString("copyno"));\
+            \}\
+            \
+        \} catch (Exception e) \{\
+            \
+            JOptionPane.showMessageDialog(this, "An error occured please"\
+                    + " contact your adminisrator " + e.getMessage(),\
+                    "Error Message", JOptionPane.ERROR_MESSAGE);\
+        \}\
+\
+    \}                                              \
+\
+    private void jComboBoxCopyNoActionPerformed(java.awt.event.ActionEvent evt) \{                                                \
+        \
+        jComboBoxLibId.removeAllItems();\
+        \
+        if (jComboBoxCopyNo.getSelectedItem() != null) \{\
+            String docId = jComboBoxDocId.getSelectedItem().toString();\
+            String copyNo = jComboBoxCopyNo.getSelectedItem().toString();\
+            \
+            try \{\
+                \
+                con = MySQLConnection.ConnectionDB();\
+                String sql = "select libid from copy where docid=? and copyno=? ";\
+                PreparedStatement stmt = con.prepareStatement(sql);\
+                stmt.setString(1, docId);\
+                stmt.setString(2, copyNo);\
+                \
+                result = stmt.executeQuery();\
+                \
+                while (result.next()) \{\
+                    \
+                    jComboBoxLibId.addItem(result.getString("libid"));\
+                \}\
+//                result.close();\
+//                con.close();\
+\
+            \} catch (Exception e) \{\
+                \
+                JOptionPane.showMessageDialog(this, "An error occured please"\
+                        + " contact your adminisrator " + e.getMessage(),\
+                        "Error Message", JOptionPane.ERROR_MESSAGE);\
+            \}\
+        \}\
+\
+    \}                                               \
+\
+    private void jComboBoxLibIdActionPerformed(java.awt.event.ActionEvent evt) \{                                               \
+        // TODO add your handling code here:\
+    \}                                              \
+\
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) \{                                         \
+        \
+        String readerId = jComboBoxReaderId.getSelectedItem().toString();\
+        String docId = jComboBoxDocId.getSelectedItem().toString();\
+        String copyNum = jComboBoxCopyNo.getSelectedItem().toString();\
+        String libId = jComboBoxLibId.getSelectedItem().toString();\
+        \
+        date = jDateChooser1.getDate();\
+        sqlDate = new java.sql.Date(date.getTime());\
+\
+        //&& !txtDateTime.getText().isEmpty()\
+        try \{\
+            con = MySQLConnection.ConnectionDB();\
+            \
+            String sql1 = "SELECT READERID, COUNT(DOCID) AS TOTALDOC FROM RESERVES WHERE READERID = ?;";\
+            stmt = con.prepareStatement(sql1);\
+            stmt.setString(1, readerId);\
+            result = stmt.executeQuery();\
+            while (result.next()) \{\
+                \
+                if (result.getInt("TOTALDOC") <= 10) \{\
+                    \
+                    String sql = "INSERT INTO `RESERVES` (`READERID`,"\
+                            + " `DOCID`, `COPYNO`, `LIBID`, `DTIME`) VALUES (?,?,?,?,?);";\
+                    \
+                    stmt = con.prepareStatement(sql);\
+                    \
+                    stmt.setString(1, readerId);\
+                    stmt.setString(2, docId);\
+                    stmt.setString(3, copyNum);\
+                    stmt.setString(4, libId);\
+                    stmt.setDate(5, sqlDate);\
+                    \
+                    stmt.executeUpdate();\
+                    JOptionPane.showMessageDialog(null, "Book reserved successfully!!");\
+                    this.dispose();\
+                    \
+                \} else \{\
+                    JOptionPane.showMessageDialog(this, "You can not resereved more then 10 books");\
+                    \
+                \}\
+                \
+            \}\
+            \
+        \} catch (Exception e) \{\
+            \
+            JOptionPane.showMessageDialog(this, "An error occured please"\
+                    + " contact your adminisrator " + e.getMessage(),\
+                    "Error Message", JOptionPane.ERROR_MESSAGE);\
+        \}\
+        \
+\
+    \}                                        \
+\
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) \{                                         \
+        // TODO add your handling code here:\
+        this.dispose();\
+    \}                                        \
+\
+    /**\
+     * @param args the command line arguments\
+     */\
+    public static void main(String args[]) \{\
+        /* Set the Nimbus look and feel */\
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">\
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.\
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html \
+         */\
+        try \{\
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) \{\
+                if ("Nimbus".equals(info.getName())) \{\
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());\
+                    break;\
+                \}\
+            \}\
+        \} catch (ClassNotFoundException ex) \{\
+            java.util.logging.Logger.getLogger(DocumentReserve2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (InstantiationException ex) \{\
+            java.util.logging.Logger.getLogger(DocumentReserve2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (IllegalAccessException ex) \{\
+            java.util.logging.Logger.getLogger(DocumentReserve2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (javax.swing.UnsupportedLookAndFeelException ex) \{\
+            java.util.logging.Logger.getLogger(DocumentReserve2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \}\
+        //</editor-fold>\
+\
+        /* Create and display the form */\
+        java.awt.EventQueue.invokeLater(new Runnable() \{\
+            public void run() \{\
+                new DocumentReserve2().setVisible(true);\
+            \}\
+        \});\
+    \}\
+\
+    // Variables declaration - do not modify                     \
+    private javax.swing.JButton jButton1;\
+    private javax.swing.JButton jButton2;\
+    private javax.swing.JComboBox<String> jComboBoxCopyNo;\
+    private javax.swing.JComboBox<String> jComboBoxDocId;\
+    private javax.swing.JComboBox<String> jComboBoxLibId;\
+    private javax.swing.JComboBox<String> jComboBoxReaderId;\
+    private com.toedter.calendar.JDateChooser jDateChooser1;\
+    private javax.swing.JLabel jLabel1;\
+    private javax.swing.JLabel jLabel2;\
+    private javax.swing.JLabel jLabel3;\
+    private javax.swing.JLabel jLabel4;\
+    private javax.swing.JLabel jLabel5;\
+    // End of variables declaration                   \
+\}\
+\
+\
+======================================\
+\
+DOCUMENT CHECKOUT\
+\
+/*\
+ * To change this license header, choose License Headers in Project Properties.\
+ * To change this template file, choose Tools | Templates\
+ * and open the template in the editor.\
+ */\
+package LoginPage;\
+\
+import java.sql.*;\
+import java.util.ArrayList;\
+import javax.swing.*;\
+\
+/**\
+ *\
+ * @author ashavatalia\
+ */\
+public class Document_Checkout extends javax.swing.JFrame \{\
+\
+    Connection con;\
+    PreparedStatement stmt;\
+    ResultSet result;\
+\
+    java.util.Date date = new java.util.Date();\
+    java.sql.Date sqlDate;\
+\
+    public Document_Checkout() \{\
+        initComponents();\
+        getReaderIdFromReserves();\
+        jDateChooser1.getJCalendar().setMinSelectableDate(date);\
+    \}\
+\
+    void getReaderIdFromReserves() \{\
+\
+        try \{\
+            con = MySQLConnection.ConnectionDB();\
+\
+            String sql = "select distinct readerid from reserves";\
+            Statement stmt1 = con.createStatement();\
+\
+            result = stmt1.executeQuery(sql);\
+\
+            ArrayList<String> data = new ArrayList<>();\
+            while (result.next()) \{\
+\
+                String readerId = result.getString("readerid");\
+                data.add(readerId);\
+            \}\
+\
+            jComboBoxReaderId.removeAllItems();\
+            //jComboBoxReaderId.addItem("Select");\
+            for (int i = 0; i < data.size(); i++) \{\
+\
+                jComboBoxReaderId.addItem(data.get(i));\
+\
+            \}\
+\
+        \} catch (Exception e) \{\
+\
+            e.printStackTrace();\
+        \}\
+    \}\
+\
+    @SuppressWarnings("unchecked")\
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          \
+    private void initComponents() \{\
+\
+        jLabel1 = new javax.swing.JLabel();\
+        jLabel2 = new javax.swing.JLabel();\
+        jComboBoxReaderId = new javax.swing.JComboBox<>();\
+        jLabel3 = new javax.swing.JLabel();\
+        jComboBoxDocumentId = new javax.swing.JComboBox<>();\
+        jLabel4 = new javax.swing.JLabel();\
+        jComboBoxCopyNum = new javax.swing.JComboBox<>();\
+        jLabel5 = new javax.swing.JLabel();\
+        jComboBoxLibraryId = new javax.swing.JComboBox<>();\
+        jLabel6 = new javax.swing.JLabel();\
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();\
+        jButton1 = new javax.swing.JButton();\
+        jButton2 = new javax.swing.JButton();\
+\
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);\
+\
+        jLabel1.setText("Document Checkout!!");\
+\
+        jLabel2.setText("Reader ID :");\
+\
+        jComboBoxReaderId.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jComboBoxReaderIdActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jLabel3.setText("Document ID :");\
+\
+        jComboBoxDocumentId.addMouseListener(new java.awt.event.MouseAdapter() \{\
+            public void mouseClicked(java.awt.event.MouseEvent evt) \{\
+                jComboBoxDocumentIdMouseClicked(evt);\
+            \}\
+        \});\
+        jComboBoxDocumentId.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jComboBoxDocumentIdActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jLabel4.setText("Copy Number :");\
+\
+        jComboBoxCopyNum.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jComboBoxCopyNumActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jLabel5.setText("Library ID :");\
+\
+        jComboBoxLibraryId.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jComboBoxLibraryIdActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jLabel6.setText("Date : ");\
+\
+        jButton1.setText("Checkout");\
+        jButton1.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jButton1ActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jButton2.setText("Back");\
+        jButton2.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jButton2ActionPerformed(evt);\
+            \}\
+        \});\
+\
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());\
+        getContentPane().setLayout(layout);\
+        layout.setHorizontalGroup(\
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+            .addGroup(layout.createSequentialGroup()\
+                .addGap(147, 147, 147)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)\
+                    .addGroup(layout.createSequentialGroup()\
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+                            .addComponent(jLabel2)\
+                            .addComponent(jLabel3)\
+                            .addComponent(jLabel4)\
+                            .addComponent(jLabel5)\
+                            .addComponent(jLabel6))\
+                        .addGap(72, 72, 72)\
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)\
+                            .addComponent(jComboBoxReaderId, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)\
+                            .addComponent(jLabel1)\
+                            .addComponent(jComboBoxDocumentId, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)\
+                            .addComponent(jComboBoxCopyNum, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)\
+                            .addComponent(jComboBoxLibraryId, 0, 245, Short.MAX_VALUE)\
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))\
+                    .addGroup(layout.createSequentialGroup()\
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)\
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)))\
+                .addContainerGap(233, Short.MAX_VALUE))\
+        );\
+        layout.setVerticalGroup(\
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+            .addGroup(layout.createSequentialGroup()\
+                .addGap(42, 42, 42)\
+                .addComponent(jLabel1)\
+                .addGap(46, 46, 46)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)\
+                    .addComponent(jLabel2)\
+                    .addComponent(jComboBoxReaderId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addGap(51, 51, 51)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+                    .addComponent(jLabel3)\
+                    .addComponent(jComboBoxDocumentId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addGap(38, 38, 38)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)\
+                    .addComponent(jLabel4)\
+                    .addComponent(jComboBoxCopyNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addGap(58, 58, 58)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)\
+                    .addComponent(jLabel5)\
+                    .addComponent(jComboBoxLibraryId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addGap(68, 68, 68)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+                    .addComponent(jLabel6)\
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)\
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addGap(72, 72, 72))\
+        );\
+\
+        pack();\
+    \}// </editor-fold>                        \
+\
+    private void jComboBoxReaderIdActionPerformed(java.awt.event.ActionEvent evt) \{                                                  \
+\
+        jComboBoxDocumentId.removeAllItems();\
+\
+        String docId = jComboBoxReaderId.getSelectedItem().toString();\
+\
+        try \{\
+            con = MySQLConnection.ConnectionDB();\
+            String sql = "select docid from reserves where readerid=?";\
+            PreparedStatement stmt = con.prepareStatement(sql);\
+            stmt.setString(1, docId);\
+\
+            result = stmt.executeQuery();\
+//jComboBoxDocumentId.addItem("Select");\
+            while (result.next()) \{\
+\
+                jComboBoxDocumentId.addItem(result.getString("docid"));\
+            \}\
+\
+        \} catch (Exception e) \{\
+\
+            JOptionPane.showMessageDialog(this, "An error occured please"\
+                    + " contact your adminisrator " + e.getMessage(),\
+                    "Error Message", JOptionPane.ERROR_MESSAGE);\
+        \}\
+\
+    \}                                                 \
+\
+    private void jComboBoxDocumentIdActionPerformed(java.awt.event.ActionEvent evt) \{                                                    \
+\
+//        jComboBoxCopyNum.removeAllItems();\
+//        \
+//        if (jComboBoxReaderId.getSelectedItem() != null && jComboBoxDocumentId.getSelectedItem() != null) \{\
+//            \
+//            String readerId = jComboBoxReaderId.getSelectedItem().toString();\
+//            String docId = jComboBoxDocumentId.getSelectedItem().toString();\
+//            \
+//            try \{\
+//                con = MySQLConnection.ConnectionDB();\
+//                String sql = "select copyno from reserves where readerid=? and docid=?";\
+//                PreparedStatement stmt = con.prepareStatement(sql);\
+//                stmt.setString(1, readerId);\
+//                stmt.setString(2, docId);\
+//                \
+//                result = stmt.executeQuery();\
+////jComboBoxCopyNum.addItem("Select");\
+//                ArrayList<String> data = new ArrayList<>();\
+//                while (result.next()) \{\
+//                    //String temp = result.getString("copyno");\
+//                    //data.add(temp);\
+////                     jComboBoxCopyNum.addItem(  result.getString("copyno"));\
+//                     jComboBoxCopyNum.addItem((String) result.getString("copyno"));\
+//                    //System.out.println(result.getString("copyno"));\
+//                \}\
+////                for (int i = 0; i < data.size(); i++) \{\
+////                    jComboBoxCopyNum.addItem(data.get(i));\
+////                \}\
+//                \
+//            \} catch (Exception e) \{\
+//                \
+//                JOptionPane.showMessageDialog(this, "An error occured please"\
+//                        + " contact your adminisrator " + e.getMessage(),\
+//                        "Error Message", JOptionPane.ERROR_MESSAGE);\
+//            \}\
+//        \}\
+\
+    \}                                                   \
+\
+    private void jComboBoxCopyNumActionPerformed(java.awt.event.ActionEvent evt) \{                                                 \
+\
+        jComboBoxLibraryId.removeAllItems();\
+\
+        if (jComboBoxReaderId.getSelectedItem() != null && jComboBoxDocumentId.getSelectedItem() != null\
+                && jComboBoxCopyNum.getSelectedItem() != null) \{\
+            String readerId = jComboBoxReaderId.getSelectedItem().toString();\
+            String docId = jComboBoxDocumentId.getSelectedItem().toString();\
+            String copyNo = jComboBoxCopyNum.getSelectedItem().toString();\
+\
+            try \{\
+\
+                con = MySQLConnection.ConnectionDB();\
+                String sql = "select libid from reserves where readerid=? and docid=? and copyno=? ";\
+                PreparedStatement stmt = con.prepareStatement(sql);\
+                stmt.setString(1, readerId);\
+                stmt.setString(2, docId);\
+                stmt.setString(3, copyNo);\
+\
+                result = stmt.executeQuery();\
+\
+                while (result.next()) \{\
+\
+                    jComboBoxLibraryId.addItem(result.getString("libid"));\
+                \}\
+//                result.close();\
+//                con.close();\
+\
+            \} catch (Exception e) \{\
+\
+                JOptionPane.showMessageDialog(this, "An error occured please"\
+                        + " contact your adminisrator " + e.getMessage(),\
+                        "Error Message", JOptionPane.ERROR_MESSAGE);\
+            \}\
+        \} else \{\
+            System.out.println("a");\
+        \}\
+    \}                                                \
+\
+    private void jComboBoxLibraryIdActionPerformed(java.awt.event.ActionEvent evt) \{                                                   \
+\
+//         jComboBoxLibraryId.removeAllItems();\
+//\
+//        if (jComboBoxReaderId.getSelectedItem() != null && jComboBoxDocumentId.getSelectedItem() != null\
+//                && jComboBoxCopyNum.getSelectedItem() != null) \{\
+//            String readerId = jComboBoxReaderId.getSelectedItem().toString();\
+//            String docId = jComboBoxDocumentId.getSelectedItem().toString();\
+//            String copyNo = jComboBoxCopyNum.getSelectedItem().toString();\
+//\
+//            try \{\
+//\
+//                con = MySQLConnection.ConnectionDB();\
+//                String sql = "select libid from reserves where readerid=? and docid=? and copyno=? ";\
+//                PreparedStatement stmt = con.prepareStatement(sql);\
+//                stmt.setString(1, readerId);\
+//                stmt.setString(2, docId);\
+//                stmt.setString(3, copyNo);\
+//\
+//                result = stmt.executeQuery();\
+//\
+//                while (result.next()) \{\
+//\
+//                    jComboBoxLibraryId.addItem(result.getString("libid"));\
+//                \}\
+////                result.close();\
+////                con.close();\
+//\
+//            \} catch (Exception e) \{\
+//\
+//                JOptionPane.showMessageDialog(this, "An error occured please"\
+//                        + " contact your adminisrator " + e.getMessage(),\
+//                        "Error Message", JOptionPane.ERROR_MESSAGE);\
+//            \}\
+//        \}else\{\
+//            System.out.println("a");\
+//        \}\
+\
+    \}                                                  \
+\
+    private void jComboBoxDocumentIdMouseClicked(java.awt.event.MouseEvent evt) \{                                                 \
+        // TODO add your handling code here:\
+        jComboBoxCopyNum.removeAllItems();\
+\
+        if (jComboBoxReaderId.getSelectedItem() != null && jComboBoxDocumentId.getSelectedItem() != null) \{\
+\
+            String readerId = jComboBoxReaderId.getSelectedItem().toString();\
+            String docId = jComboBoxDocumentId.getSelectedItem().toString();\
+\
+            try \{\
+                con = MySQLConnection.ConnectionDB();\
+                String sql = "select copyno from reserves where readerid=? and docid=?";\
+                PreparedStatement stmt = con.prepareStatement(sql);\
+                stmt.setString(1, readerId);\
+                stmt.setString(2, docId);\
+\
+                result = stmt.executeQuery();\
+//jComboBoxCopyNum.addItem("Select");\
+                ArrayList<String> data = new ArrayList<>();\
+                while (result.next()) \{\
+                    String temp = result.getString("copyno");\
+                    data.add(temp);\
+//                     jComboBoxCopyNum.addItem(  result.getString("copyno"));\
+\
+                    //System.out.println(result.getString("copyno"));\
+                \}\
+                for (int i = 0; i < data.size(); i++) \{\
+                    jComboBoxCopyNum.addItem(data.get(i));\
+                \}\
+\
+            \} catch (Exception e) \{\
+\
+                JOptionPane.showMessageDialog(this, "An error occured please"\
+                        + " contact your adminisrator " + e.getMessage(),\
+                        "Error Message", JOptionPane.ERROR_MESSAGE);\
+            \}\
+        \}\
+    \}                                                \
+\
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) \{                                         \
+\
+        String readerId = jComboBoxReaderId.getSelectedItem().toString();\
+        String docId = jComboBoxDocumentId.getSelectedItem().toString();\
+        String copyNum = jComboBoxCopyNum.getSelectedItem().toString();\
+        String libId = jComboBoxLibraryId.getSelectedItem().toString();\
+\
+        date = jDateChooser1.getDate();\
+        sqlDate = new java.sql.Date(date.getTime());\
+\
+        //&& !txtDateTime.getText().isEmpty()\
+        try \{\
+\
+            con = MySQLConnection.ConnectionDB();\
+            if (!jComboBoxReaderId.getSelectedItem().toString().isEmpty() && !jComboBoxDocumentId.getSelectedItem().toString().isEmpty()\
+                    && !jComboBoxCopyNum.getSelectedItem().toString().isEmpty()\
+                    && !jComboBoxLibraryId.getSelectedItem().toString().isEmpty()\
+                    && !jDateChooser1.getDate().toString().isEmpty()) \{\
+\
+                String sql1 = "SELECT READERID, COUNT(DOCID) AS TOTALDOC FROM BORROWS WHERE READERID = ? AND RDTIME IS NULL;";\
+                stmt = con.prepareStatement(sql1);\
+                stmt.setString(1, readerId);\
+                result = stmt.executeQuery();\
+                while (result.next()) \{\
+\
+                    if (result.getInt("TOTALDOC") <= 10) \{\
+\
+                        String sql = "INSERT INTO `BORROWS` (`READERID`,"\
+                                + " `DOCID`, `COPYNO`, `LIBID`, `BDTIME`,`RDTIME`) VALUES (?,?,?,?,?,NULL);";\
+\
+                        stmt = con.prepareStatement(sql);\
+\
+                        stmt.setString(1, readerId);\
+                        stmt.setString(2, docId);\
+                        stmt.setString(3, copyNum);\
+                        stmt.setString(4, libId);\
+                        stmt.setDate(5, sqlDate);\
+\
+                        stmt.executeUpdate();\
+                        JOptionPane.showMessageDialog(null, "Document checkout successfull!!");\
+                        this.dispose();\
+                    \} else \{\
+\
+                        JOptionPane.showMessageDialog(this, "You can not resereved more then 10 books");\
+                    \}\
+\
+                \}\
+\
+            \} else \{\
+                JOptionPane.showMessageDialog(this, "All feilds are compulsory!!");\
+            \}\
+\
+        \} catch (Exception e) \{\
+\
+            JOptionPane.showMessageDialog(this, "An error occured please"\
+                    + " contact your adminisrator " + e.getMessage(),\
+                    "Error Message", JOptionPane.ERROR_MESSAGE);\
+        \}\
+    \}                                        \
+\
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) \{                                         \
+\
+        this.dispose();\
+    \}                                        \
+\
+    /**\
+     * @param args the command line arguments\
+     */\
+    public static void main(String args[]) \{\
+        /* Set the Nimbus look and feel */\
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">\
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.\
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html \
+         */\
+        try \{\
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) \{\
+                if ("Nimbus".equals(info.getName())) \{\
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());\
+                    break;\
+                \}\
+            \}\
+        \} catch (ClassNotFoundException ex) \{\
+            java.util.logging.Logger.getLogger(Document_Checkout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (InstantiationException ex) \{\
+            java.util.logging.Logger.getLogger(Document_Checkout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (IllegalAccessException ex) \{\
+            java.util.logging.Logger.getLogger(Document_Checkout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (javax.swing.UnsupportedLookAndFeelException ex) \{\
+            java.util.logging.Logger.getLogger(Document_Checkout.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \}\
+        //</editor-fold>\
+\
+        /* Create and display the form */\
+        java.awt.EventQueue.invokeLater(new Runnable() \{\
+            public void run() \{\
+                new Document_Checkout().setVisible(true);\
+            \}\
+        \});\
+    \}\
+\
+    // Variables declaration - do not modify                     \
+    private javax.swing.JButton jButton1;\
+    private javax.swing.JButton jButton2;\
+    private javax.swing.JComboBox<String> jComboBoxCopyNum;\
+    private javax.swing.JComboBox<String> jComboBoxDocumentId;\
+    private javax.swing.JComboBox<String> jComboBoxLibraryId;\
+    private javax.swing.JComboBox<String> jComboBoxReaderId;\
+    private com.toedter.calendar.JDateChooser jDateChooser1;\
+    private javax.swing.JLabel jLabel1;\
+    private javax.swing.JLabel jLabel2;\
+    private javax.swing.JLabel jLabel3;\
+    private javax.swing.JLabel jLabel4;\
+    private javax.swing.JLabel jLabel5;\
+    private javax.swing.JLabel jLabel6;\
+    // End of variables declaration                   \
+\}\
+\
+=======================================\
+\
+COMPUTE FINE\
+\
+/*\
+ * To change this license header, choose License Headers in Project Properties.\
+ * To change this template file, choose Tools | Templates\
+ * and open the template in the editor.\
+ */\
+package LoginPage;\
+\
+import javax.swing.*;\
+import net.proteanit.sql.DbUtils;\
+import java.sql.*;\
+\
+/**\
+ *\
+ * @author ashavatalia\
+ */\
+public class ComputeFine extends javax.swing.JFrame \{\
+\
+    Connection con;\
+    PreparedStatement stmt;\
+    ResultSet result;\
+\
+    public ComputeFine() \{\
+        initComponents();\
+    \}\
+\
+    /**\
+     * This method is called from within the constructor to initialize the form.\
+     * WARNING: Do NOT modify this code. The content of this method is always\
+     * regenerated by the Form Editor.\
+     */\
+    @SuppressWarnings("unchecked")\
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          \
+    private void initComponents() \{\
+\
+        jLabel1 = new javax.swing.JLabel();\
+        jLabel2 = new javax.swing.JLabel();\
+        txtReaderId = new javax.swing.JTextField();\
+        jButton1 = new javax.swing.JButton();\
+        jScrollPane1 = new javax.swing.JScrollPane();\
+        jTable1 = new javax.swing.JTable();\
+        jButton2 = new javax.swing.JButton();\
+\
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);\
+\
+        jLabel1.setText("Compute fine for a document copy borrowed by a reader based on the current date!!");\
+\
+        jLabel2.setText("Enter a reader ID :");\
+\
+        jButton1.setText("Compute Fine");\
+        jButton1.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jButton1ActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(\
+            new Object [][] \{\
+                \{null, null, null, null\},\
+                \{null, null, null, null\},\
+                \{null, null, null, null\},\
+                \{null, null, null, null\}\
+            \},\
+            new String [] \{\
+                "Title 1", "Title 2", "Title 3", "Title 4"\
+            \}\
+        ));\
+        jScrollPane1.setViewportView(jTable1);\
+\
+        jButton2.setText("Back");\
+        jButton2.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jButton2ActionPerformed(evt);\
+            \}\
+        \});\
+\
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());\
+        getContentPane().setLayout(layout);\
+        layout.setHorizontalGroup(\
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+            .addGroup(layout.createSequentialGroup()\
+                .addGap(48, 48, 48)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+                    .addGroup(layout.createSequentialGroup()\
+                        .addComponent(jLabel2)\
+                        .addGap(39, 39, 39)\
+                        .addComponent(txtReaderId, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                        .addGap(31, 31, 31)\
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)\
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))\
+            .addGroup(layout.createSequentialGroup()\
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 777, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                .addGap(0, 0, Short.MAX_VALUE))\
+        );\
+        layout.setVerticalGroup(\
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+            .addGroup(layout.createSequentialGroup()\
+                .addGap(48, 48, 48)\
+                .addComponent(jLabel1)\
+                .addGap(26, 26, 26)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)\
+                    .addComponent(jLabel2)\
+                    .addComponent(txtReaderId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addGap(18, 42, Short.MAX_VALUE)\
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 469, javax.swing.GroupLayout.PREFERRED_SIZE))\
+        );\
+\
+        pack();\
+    \}// </editor-fold>                        \
+\
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) \{                                         \
+\
+        String readerId = txtReaderId.getText();\
+        if (!txtReaderId.getText().isEmpty()) \{\
+\
+            try \{\
+\
+                con = MySQLConnection.ConnectionDB();\
+                String sql = "SELECT *,IF (DATEDIFF(CURRENT_TIMESTAMP, BDTIME) > 20,"\
+                        + "(DATEDIFF(CURRENT_TIMESTAMP, BDTIME) -20) * 0.20,0) AS 'FINE' \\n"\
+                        + "FROM BORROWS WHERE READERID = ? AND RDTIME IS NULL";\
+\
+                stmt = con.prepareStatement(sql);\
+                stmt.setString(1, readerId);\
+\
+                result = stmt.executeQuery();\
+\
+                jTable1.setModel(DbUtils.resultSetToTableModel(result));\
+\
+            \} catch (Exception e) \{\
+                JOptionPane.showMessageDialog(this, "An error occured please"\
+                        + " contact your adminisrator " + e.getMessage(),\
+                        "Error Message", JOptionPane.ERROR_MESSAGE);\
+            \}\
+\
+        \} else \{\
+            JOptionPane.showMessageDialog(null, "Please enter a valid id");\
+        \}\
+\
+\
+    \}                                        \
+\
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) \{                                         \
+        \
+        this.dispose();\
+    \}                                        \
+\
+    /**\
+     * @param args the command line arguments\
+     */\
+    public static void main(String args[]) \{\
+        /* Set the Nimbus look and feel */\
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">\
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.\
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html \
+         */\
+        try \{\
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) \{\
+                if ("Nimbus".equals(info.getName())) \{\
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());\
+                    break;\
+                \}\
+            \}\
+        \} catch (ClassNotFoundException ex) \{\
+            java.util.logging.Logger.getLogger(ComputeFine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (InstantiationException ex) \{\
+            java.util.logging.Logger.getLogger(ComputeFine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (IllegalAccessException ex) \{\
+            java.util.logging.Logger.getLogger(ComputeFine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (javax.swing.UnsupportedLookAndFeelException ex) \{\
+            java.util.logging.Logger.getLogger(ComputeFine.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \}\
+        //</editor-fold>\
+\
+        /* Create and display the form */\
+        java.awt.EventQueue.invokeLater(new Runnable() \{\
+            public void run() \{\
+                new ComputeFine().setVisible(true);\
+            \}\
+        \});\
+    \}\
+\
+    // Variables declaration - do not modify                     \
+    private javax.swing.JButton jButton1;\
+    private javax.swing.JButton jButton2;\
+    private javax.swing.JLabel jLabel1;\
+    private javax.swing.JLabel jLabel2;\
+    private javax.swing.JScrollPane jScrollPane1;\
+    private javax.swing.JTable jTable1;\
+    private javax.swing.JTextField txtReaderId;\
+    // End of variables declaration                   \
+\}\
+\
+\
+==================================\
+\
+SEARCH BY TITLE\
+\
+/*\
+ * To change this license header, choose License Headers in Project Properties.\
+ * To change this template file, choose Tools | Templates\
+ * and open the template in the editor.\
+ */\
+package LoginPage;\
+\
+/**\
+ *\
+ * @author ashavatalia\
+ *\
+ */\
+import java.sql.*;\
+import javax.swing.JOptionPane;\
+import net.proteanit.sql.DbUtils;\
+\
+public class SearchByTitle extends javax.swing.JFrame \{\
+\
+    Connection con;\
+    PreparedStatement stmt;\
+    ResultSet result;\
+\
+    public SearchByTitle() \{\
+        initComponents();\
+    \}\
+\
+    /**\
+     * This method is called from within the constructor to initialize the form.\
+     * WARNING: Do NOT modify this code. The content of this method is always\
+     * regenerated by the Form Editor.\
+     */\
+    @SuppressWarnings("unchecked")\
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          \
+    private void initComponents() \{\
+\
+        jLabel1 = new javax.swing.JLabel();\
+        txt_title = new javax.swing.JTextField();\
+        jButton1 = new javax.swing.JButton();\
+        jScrollPane1 = new javax.swing.JScrollPane();\
+        tblSearchByTitle = new javax.swing.JTable();\
+        btnShowAll = new javax.swing.JButton();\
+        jButton3 = new javax.swing.JButton();\
+\
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);\
+\
+        jLabel1.setText("Enter Title to search document!!");\
+\
+        jButton1.setText("Search");\
+        jButton1.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jButton1ActionPerformed(evt);\
+            \}\
+        \});\
+\
+        tblSearchByTitle.setModel(new javax.swing.table.DefaultTableModel(\
+            new Object [][] \{\
+                \{null, null, null, null\},\
+                \{null, null, null, null\},\
+                \{null, null, null, null\},\
+                \{null, null, null, null\}\
+            \},\
+            new String [] \{\
+                "Title 1", "Title 2", "Title 3", "Title 4"\
+            \}\
+        ));\
+        jScrollPane1.setViewportView(tblSearchByTitle);\
+\
+        btnShowAll.setText("Show All");\
+        btnShowAll.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                btnShowAllActionPerformed(evt);\
+            \}\
+        \});\
+\
+        jButton3.setText("Back");\
+        jButton3.addActionListener(new java.awt.event.ActionListener() \{\
+            public void actionPerformed(java.awt.event.ActionEvent evt) \{\
+                jButton3ActionPerformed(evt);\
+            \}\
+        \});\
+\
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());\
+        getContentPane().setLayout(layout);\
+        layout.setHorizontalGroup(\
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)\
+            .addGroup(layout.createSequentialGroup()\
+                .addGap(37, 37, 37)\
+                .addComponent(jLabel1)\
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)\
+                .addComponent(txt_title, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)\
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)\
+                    .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)\
+                    .addComponent(btnShowAll, javax.swing.GroupLayout.DEFAULT_SIZE, 109, Short.MAX_VALUE))\
+                .addContainerGap(14, Short.MAX_VALUE))\
+        );\
+        layout.setVerticalGroup(\
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)\
+            .addGroup(layout.createSequentialGroup()\
+                .addGap(50, 50, 50)\
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)\
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                    .addComponent(txt_title, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)\
+                    .addComponent(btnShowAll, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))\
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)\
+                .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)\
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)\
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))\
+        );\
+\
+        pack();\
+    \}// </editor-fold>                        \
+\
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) \{                                         \
+\
+        String tilte = txt_title.getText();\
+\
+        if (!txt_title.getText().isEmpty()) \{\
+\
+            try \{\
+\
+                con = MySQLConnection.ConnectionDB();\
+                String sql = "select * from document where title=?";\
+                stmt = con.prepareStatement(sql);\
+                stmt.setString(1, tilte);\
+\
+                result = stmt.executeQuery();\
+\
+                tblSearchByTitle.setModel(DbUtils.resultSetToTableModel(result));\
+\
+            \} catch (Exception e) \{\
+                JOptionPane.showMessageDialog(this, "An error occured please"\
+                        + " contact your adminisrator " + e.getMessage(),\
+                        "Error Message", JOptionPane.ERROR_MESSAGE);\
+            \}\
+\
+        \} else \{\
+            JOptionPane.showMessageDialog(null, "Please enter a valid id");\
+        \}\
+    \}                                        \
+\
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) \{                                         \
+\
+        this.dispose();\
+    \}                                        \
+\
+    private void btnShowAllActionPerformed(java.awt.event.ActionEvent evt) \{                                           \
+\
+        try \{\
+\
+            con = MySQLConnection.ConnectionDB();\
+            String sql = "select * from document";\
+            stmt = con.prepareStatement(sql);\
+\
+            result = stmt.executeQuery();\
+\
+            tblSearchByTitle.setModel(DbUtils.resultSetToTableModel(result));\
+\
+        \} catch (Exception e) \{\
+            JOptionPane.showMessageDialog(this, "An error occured please"\
+                    + " contact your adminisrator " + e.getMessage(),\
+                    "Error Message", JOptionPane.ERROR_MESSAGE);\
+        \}\
+    \}                                          \
+\
+    /**\
+     * @param args the command line arguments\
+     */\
+    public static void main(String args[]) \{\
+        /* Set the Nimbus look and feel */\
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">\
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.\
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html \
+         */\
+        try \{\
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) \{\
+                if ("Nimbus".equals(info.getName())) \{\
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());\
+                    break;\
+                \}\
+            \}\
+        \} catch (ClassNotFoundException ex) \{\
+            java.util.logging.Logger.getLogger(SearchByTitle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (InstantiationException ex) \{\
+            java.util.logging.Logger.getLogger(SearchByTitle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (IllegalAccessException ex) \{\
+            java.util.logging.Logger.getLogger(SearchByTitle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \} catch (javax.swing.UnsupportedLookAndFeelException ex) \{\
+            java.util.logging.Logger.getLogger(SearchByTitle.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);\
+        \}\
+        //</editor-fold>\
+\
+        /* Create and display the form */\
+        java.awt.EventQueue.invokeLater(new Runnable() \{\
+            public void run() \{\
+                new SearchByTitle().setVisible(true);\
+            \}\
+        \});\
+    \}\
+\
+    // Variables declaration - do not modify                     \
+    private javax.swing.JButton btnShowAll;\
+    private javax.swing.JButton jButton1;\
+    private javax.swing.JButton jButton3;\
+    private javax.swing.JLabel jLabel1;\
+    private javax.swing.JScrollPane jScrollPane1;\
+    private javax.swing.JTable tblSearchByTitle;\
+    private javax.swing.JTextField txt_title;\
+    // End of variables declaration                   \
+\}\
+\
+\
+}
